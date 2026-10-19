@@ -79,6 +79,9 @@ body.patterns .cell.filled{border:2px solid #fff;outline:1px solid #101526;outli
 @media(max-height:740px){.sub,.eventhint{display:none}.app{padding-top:5px}.top{margin-bottom:4px}.name{font-size:19px}.logo{height:33px;width:33px}.modebar button{padding:6px 3px}.worldline{padding:3px 7px}.worldline .worldicon{font-size:20px}.blox{height:30px;width:30px;font-size:17px}.mascot{padding:3px 8px}.stats{gap:5px}.stat{padding:3px 7px}.bonusbar{padding:3px 7px}.slot{height:56px}.board{max-width:min(420px,calc(100dvh - 395px))}}
 @media(max-width:440px){.board{max-width:min(100%,calc(100dvh - 460px))}.app{padding-inline:8px}.top{margin-bottom:5px}.pillbtn{padding:7px}.modebar button{padding:7px 2px}.worldline .worldicon{font-size:23px}.worldline strong{font-size:12px}.options select{font-size:11px;padding:5px}.options button{padding:5px}.worldmap{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:440px) and (max-height:720px){.board{max-width:min(100%,calc(100dvh - 390px))}.bubble{font-size:10px}.worldline .progress{display:none}.trayHeader span{display:none}.stats .stat .value{font-size:18px}}
+
+/* v3.1.1 display fix: preserve colour of placed blocks in all modes. */
+body[data-mode] .board .cell.filled{background:var(--tile,#50dcca)!important;background-color:var(--tile,#50dcca)!important;opacity:1}
 </style></head>
 <body><main class="app"><header class="top"><div class="brand"><div class="logo">▦</div><div><div class="name">BLOCK RUSH</div><div class="sub">Place · Clear · Repeat</div></div></div><button class="pillbtn" id="sound" aria-label="Toggle sound">♫ On</button></header>
 <nav class="modebar" aria-label="Game modes"><button data-mode="junior" type="button">🌈 Junior</button><button data-mode="classic" class="active" type="button">🧩 Classic</button><button data-mode="arcade" type="button">⚡ Arcade</button><button data-mode="daily" type="button">📅 Daily</button></nav>
