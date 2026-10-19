@@ -1,0 +1,43 @@
+name: Package HTML5 game for distribution
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - index.html
+      - privacy.html
+      - .github/workflows/build-distribution.yml
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify game and create platform ZIP files
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile, ZIP_DEFLATED
+          import re
+          game=Path('index.html').read_text(encoding='utf-8')
+          assert '<html' in game and '</html>' in game
+          assert "tile.className='solid-tile'" in game, 'Must retain visible blocks fix'
+          assert 'data-mode="adventure"' in game and 'data-mode="zen"' in game
+          assert Path('privacy.html').is_file()
+          for title in ('Block-Rush-4-itchio.zip','Block-Rush-4-Newgrounds.zip'):
+              with ZipFile(title,'w',ZIP_DEFLATED) as archive:
+                  archive.write('index.html','index.html')
+                  archive.write('privacy.html','privacy.html')
+              with ZipFile(title) as archive:
+                  assert 'index.html' in archive.namelist()
+                  assert archive.testzip() is None
+              print('Created',title)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: block-rush-4-html5-distribution
+          path: |
+            Block-Rush-4-itchio.zip
+            Block-Rush-4-Newgrounds.zip
+          retention-days: 90
